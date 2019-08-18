@@ -41,6 +41,11 @@ if(CCACHE_FOUND)
 endif(CCACHE_FOUND)
 
 #
+# Includes
+#
+include(ExternalProject)
+
+#
 # Google Test
 #
 find_package(GTest)

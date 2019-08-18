@@ -9,6 +9,10 @@ project(${PROJECT_LIB} VERSION 1.0.0 LANGUAGES CXX)
 set (VERSION_FILE "version.txt")
 file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
 
+#
+# Options
+#
+option(BUILD_TESTING "Enable creation of Eigen tests." OFF)
 
 #
 # CXX 17
@@ -46,19 +50,22 @@ endif(CCACHE_FOUND)
 include(ExternalProject)
 
 #
-# Google Test
-#
-find_package(GTest)
-if (NOT GTEST_FOUND)
-    ExternalProject_Add(googletest
-            GIT_REPOSITORY https://github.com/google/googletest
-            CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
-            )
-endif ()
 
 add_subdirectory(lib)
-add_subdirectory(tests)
-enable_testing ()
+
+if(BUILD_TESTING)
+    # Google Test
+    #
+    find_package(GTest)
+    if (NOT GTEST_FOUND)
+        ExternalProject_Add(googletest
+                GIT_REPOSITORY https://github.com/google/googletest
+                CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+                )
+    endif ()
+    add_subdirectory(tests)
+    enable_testing ()
+endif()
 
 # Install package
 #

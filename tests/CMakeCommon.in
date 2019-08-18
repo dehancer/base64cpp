@@ -1,0 +1,29 @@
+set(TEST_LIBRARIES)
+
+if (GTEST_FOUND)
+    include_directories(${GTEST_INCLUDE_DIRS})
+    set(TEST_LIBRARIES ${GTEST_BOTH_LIBRARIES})
+else()
+    set(TEST_LIBRARIES gtest;gtest_main)
+endif()
+
+file(GLOB TESTS_SOURCES ${TESTS_SOURCES}
+        ./*.cpp
+        )
+
+add_executable(${TEST} ${TESTS_SOURCES})
+
+target_link_libraries(
+        ${TEST}
+        ${PROJECT_LIB}
+        ${TEST_LIBRARIES}
+)
+
+add_dependencies(
+        ${TEST}
+        ${PROJECT_LIB}
+)
+
+add_test(test ${TEST})
+enable_testing()
+

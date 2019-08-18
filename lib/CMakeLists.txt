@@ -56,6 +56,6 @@ configure_package_config_file(
 )
 
 install(TARGETS ${PROJECT_LIB}   DESTINATION lib)
-install(FILES   ${PUBLIC_INCLUDE_FILES} DESTINATION include/capy)
+install(FILES   ${PUBLIC_INCLUDE_FILES} DESTINATION include)
 install(FILES   ${project_config} ${version_config} DESTINATION lib/cmake/${PROJECT_LIB})
 install(FILES cmake/${PROJECT_LIB}.cmake DESTINATION lib/cmake/${PROJECT_LIB})

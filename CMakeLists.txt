@@ -15,7 +15,7 @@ file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
 option(BUILD_TESTING "Enable creation of Eigen tests." OFF)
 
 #
-# CXX 17
+# CXX 11
 #
 set (CMAKE_CXX_STANDARD 11)
 set (BUILD_SHARED_LIBS OFF)

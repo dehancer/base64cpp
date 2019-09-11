@@ -20,4 +20,6 @@ TEST(Base64, Base64Test) {
 
     std::cout << "<" << from_base64 << std::endl;
 
+    EXPECT_TRUE(from_base64 == str);
+
 }

@@ -2,9 +2,9 @@ set(TEST_LIBRARIES)
 
 if (GTEST_FOUND)
     include_directories(${GTEST_INCLUDE_DIRS})
-    set(TEST_LIBRARIES ${GTEST_BOTH_LIBRARIES})
+    set(TEST_LIBRARIES ${GTEST_BOTH_LIBRARIES};pthread)
 else()
-    set(TEST_LIBRARIES gtest;gtest_main)
+    set(TEST_LIBRARIES gtest;gtest_main;pthread)
 endif()
 
 file(GLOB TESTS_SOURCES ${TESTS_SOURCES}

@@ -19,6 +19,8 @@ option(BUILD_TESTING "Enable creation of Eigen tests." OFF)
 #
 set (CMAKE_CXX_STANDARD 11)
 set (BUILD_SHARED_LIBS OFF)
+set (CMAKE_C_COMPILER ${CMAKE_C_COMPILER})
+set (CMAKE_CXX_COMPILER ${CMAKE_CXX_COMPILER})
 
 #
 # Packages

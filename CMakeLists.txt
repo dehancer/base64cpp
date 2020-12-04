@@ -14,6 +14,18 @@ file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
 #
 option(BUILD_TESTING "Enable creation of Eigen tests." OFF)
 
+option(DEHACNER_TARGET_ARCH "")
+
+if (DEHACNER_TARGET_ARCH)
+    #
+    # x86_64-apple-macos10.13
+    # or
+    # arm64-apple-macos11
+    #
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -target ${DEHACNER_TARGET_ARCH}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -target ${DEHACNER_TARGET_ARCH}")
+endif ()
+
 #
 # CXX 11
 #

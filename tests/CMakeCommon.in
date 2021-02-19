@@ -22,6 +22,7 @@ target_link_libraries(
 add_dependencies(
         ${TEST}
         ${PROJECT_LIB}
+        ${COMMON_DEPENDENCIES}
 )
 
 add_test(test ${TEST})

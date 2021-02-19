@@ -9,9 +9,15 @@
  
  ## Build
  
-     $ git clone https://github.com/dnevera/base64cpp
-     $ cd ./base64cpp; mkdir build; cd ./build
-     $ cmake ..; make -j4 install
+    git clone https://github.com/dnevera/base64cpp
+    cd ./base64cpp; mkdir build; cd ./build
+    # mac os M1 
+    cmake -DDEHANCER_TARGET_ARCH=arm64-apple-macos11 -DBUILD_TESTING=ON ..; make -j4
+    # or mac os Intel
+    cmake -DDEHANCER_TARGET_ARCH=x86_64-apple-macos10.13 -DBUILD_TESTING=ON ..; make -j4
+    # or Linux Intel
+    cmake -DBUILD_TESTING=ON ..; make -j4
+    make test
 
  ## Build in project
  

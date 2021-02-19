@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 # Project
 #
 set(PROJECT_LIB base64cpp)
-project(${PROJECT_LIB} VERSION 1.0.1 LANGUAGES CXX)
+project(${PROJECT_LIB} VERSION 1.1.2)
 
 set (VERSION_FILE "version.txt")
 file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -13,7 +13,6 @@ file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
 # Options
 #
 option(BUILD_TESTING "Enable creation of Eigen tests." OFF)
-
 option(DEHANCER_TARGET_ARCH "")
 
 if (DEHANCER_TARGET_ARCH)
@@ -31,8 +30,11 @@ endif ()
 #
 set (CMAKE_CXX_STANDARD 11)
 set (BUILD_SHARED_LIBS OFF)
-set (CMAKE_C_COMPILER ${CMAKE_C_COMPILER})
-set (CMAKE_CXX_COMPILER ${CMAKE_CXX_COMPILER})
+
+# googletes, etc
+set (EXTERNAL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/external)
+set (EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
+set (EXTERNAL_INCLUDE_DIR ${EXTERNAL_INSTALL_LOCATION}/include)
 
 #
 # Packages
@@ -70,13 +72,35 @@ add_subdirectory(lib)
 if(BUILD_TESTING)
     # Google Test
     #
+    #
+    # Google TEST
+    #
     find_package(GTest)
     if (NOT GTEST_FOUND)
         ExternalProject_Add(googletest
                 GIT_REPOSITORY https://github.com/google/googletest
-                CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+                CMAKE_ARGS
+                -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
+                -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
+                -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+                -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
+                -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
                 )
-    endif ()
+        set(COMMON_DEPENDENCIES ${COMMON_DEPENDENCIES};googletest)
+
+        include_directories(
+                ./
+                ../include
+                ${CMAKE_BINARY_DIR}/external/include
+        )
+
+        link_directories(
+                ${CMAKE_BINARY_DIR}/external/lib
+        )
+
+    endif()
+
     add_subdirectory(tests)
     enable_testing ()
 endif()

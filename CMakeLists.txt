@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 # Project
 #
 set(PROJECT_LIB base64cpp)
-project(${PROJECT_LIB} VERSION 1.1.2)
+project(${PROJECT_LIB} VERSION 1.1.3)
 
 set (VERSION_FILE "version.txt")
 file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -14,6 +14,16 @@ file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
 #
 option(BUILD_TESTING "Enable creation of Eigen tests." OFF)
 option(DEHANCER_TARGET_ARCH "")
+
+option(DEHANCER_COMMON_DIR  "")
+if (NOT DEHANCER_COMMON_DIR)
+    set(DEHANCER_COMMON_DIR ${CMAKE_BINARY_DIR}/tmp)
+endif ()
+
+option(EXTERNAL_INSTALL_LOCATION  "")
+if (NOT EXTERNAL_INSTALL_LOCATION)
+    set (EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
+endif ()
 
 if (DEHANCER_TARGET_ARCH)
     #
@@ -34,7 +44,6 @@ set (BUILD_SHARED_LIBS OFF)
 
 # googletes, etc
 set (EXTERNAL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/external)
-set (EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
 set (EXTERNAL_INCLUDE_DIR ${EXTERNAL_INSTALL_LOCATION}/include)
 
 #
@@ -93,11 +102,11 @@ if(BUILD_TESTING)
         include_directories(
                 ./
                 ../include
-                ${CMAKE_BINARY_DIR}/external/include
+                ${EXTERNAL_INSTALL_LOCATION}/include
         )
 
         link_directories(
-                ${CMAKE_BINARY_DIR}/external/lib
+                ${EXTERNAL_INSTALL_LOCATION}/lib
         )
 
     endif()

@@ -102,7 +102,6 @@ if(BUILD_TESTING)
                 -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
                 -DCMAKE_C_FLAGS=${CMAKE_C_FLAGS}
                 -DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS}
-                -DCOMPILE_OPTIONS="/MT"
                 )
         set(COMMON_DEPENDENCIES ${COMMON_DEPENDENCIES};googletest)
 

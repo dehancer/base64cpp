@@ -55,7 +55,7 @@ endif ()
 #
 # CXX 11
 #
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 set (BUILD_SHARED_LIBS OFF)
 
 # googletes, etc
@@ -73,7 +73,7 @@ if(NOT PKG_CONFIG_FOUND)
 endif()
 
 #
-# Programms
+# Programs
 #
 find_program(CCACHE_FOUND ccache)
 find_program(MAKE_EXE NAMES gmake nmake make)
@@ -93,44 +93,43 @@ include(ExternalProject)
 
 #
 
-add_subdirectory(lib)
-
-if(BUILD_TESTING)
-    #
-    # Google TEST
-    #
+#
+# Google Test
+#
+if (BUILD_TESTING)
     find_package(GTest)
     if (NOT GTEST_FOUND)
+
         string(STRIP "${CMAKE_C_FLAGS} -D_ITERATOR_DEBUG_LEVEL=0" C_FLAGS)
         string(STRIP "${CMAKE_CXX_FLAGS} -D_ITERATOR_DEBUG_LEVEL=0" CXX_FLAGS)
+
         ExternalProject_Add(googletest
                 GIT_REPOSITORY https://github.com/google/googletest
                 CMAKE_ARGS
                 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                -DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}
                 -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
-                -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER} -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-                -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
+                -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+                -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                -DCMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}
                 -DCMAKE_C_FLAGS=${C_FLAGS}
                 -DCMAKE_CXX_FLAGS=${CXX_FLAGS}
+                PREFIX ${DEHANCER_COMMON_DIR}
                 )
         set(COMMON_DEPENDENCIES ${COMMON_DEPENDENCIES};googletest)
+    endif ()
 
-        include_directories(
-                ./
-                ../include
-                ${EXTERNAL_INSTALL_LOCATION}/include
-        )
+    #add_subdirectory(tests)
+    #enable_testing ()
 
-        link_directories(
-                ${EXTERNAL_INSTALL_LOCATION}/lib
-        )
+endif ()
 
-    endif()
+add_subdirectory(lib)
 
+if (BUILD_TESTING)
     add_subdirectory(tests)
     enable_testing ()
-endif()
+endif ()
+
 
 # Install package
 #

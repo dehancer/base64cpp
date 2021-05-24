@@ -18,6 +18,15 @@ if (NOT WIN32)
     set(TEST_LIBRARIES ${TEST_LIBRARIES};pthread)
 endif ()
 
+include_directories(
+        ./
+        ../include
+        ${EXTERNAL_INSTALL_LOCATION}/include
+)
+
+link_directories(
+        ${EXTERNAL_INSTALL_LOCATION}/lib
+)
 
 file(GLOB TESTS_SOURCES ${TESTS_SOURCES}
         ./*.cpp

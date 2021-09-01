@@ -92,8 +92,6 @@ endif(CCACHE_FOUND)
 include(ExternalProject)
 
 #
-
-#
 # Google Test
 #
 if (BUILD_TESTING)
@@ -117,9 +115,6 @@ if (BUILD_TESTING)
                 )
         set(COMMON_DEPENDENCIES ${COMMON_DEPENDENCIES};googletest)
     endif ()
-
-    #add_subdirectory(tests)
-    #enable_testing ()
 
 endif ()
 

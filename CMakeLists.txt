@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 # Project
 #
 set(PROJECT_LIB base64cpp)
-project(${PROJECT_LIB} VERSION 1.1.4)
+project(${PROJECT_LIB} VERSION 1.1.6)
 
 set (VERSION_FILE "version.txt")
 file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -45,7 +45,7 @@ if (WIN32)
 else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -rdynamic")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=default")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-command-line-argument")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Ofast -ffast-math")
 endif ()
@@ -92,8 +92,6 @@ endif(CCACHE_FOUND)
 include(ExternalProject)
 
 #
-
-#
 # Google Test
 #
 if (BUILD_TESTING)
@@ -105,6 +103,7 @@ if (BUILD_TESTING)
 
         ExternalProject_Add(googletest
                 GIT_REPOSITORY https://github.com/google/googletest
+                GIT_TAG release-1.11.0
                 CMAKE_ARGS
                 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                 -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
@@ -117,9 +116,6 @@ if (BUILD_TESTING)
                 )
         set(COMMON_DEPENDENCIES ${COMMON_DEPENDENCIES};googletest)
     endif ()
-
-    #add_subdirectory(tests)
-    #enable_testing ()
 
 endif ()
 

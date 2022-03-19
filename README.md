@@ -22,16 +22,13 @@
 Windows GCC
 =======
 
-    # mingw
-    # Install https://www.msys2.org/
-    # https://blog.jetbrains.com/clion/2020/12/setting-up-clang-on-windows/
-
-    pacman -S mingw-w64-x86_64-toolchain
-    pacman -S mingw-w64-x86_64-clang
-    pacman -S mingw-w64-x86_64-cmake
-    pacman -S libcurl
-    pacman -S zlib-devel
-    pacman -S libcurl-devel
+    cmake -G Xcode \ 
+    -DCMAKE_TOOLCHAIN_FILE=~/Develop/Dehancer/Dehancer-Plugins/ios-cmake/ios.toolchain.cmake \
+    -DPLATFORM=OS64COMBINED \
+    -DENABLE_BITCODE=ON \
+    -DBUILD_TESTING=OFF \
+    -DCMAKE_INSTALL_PREFIX=~/Develop/local/ios/dehancer
+    cmake --build . --config Release && cmake --install . --config Release
 
 
 Windows MVSC

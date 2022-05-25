@@ -1,1 +1,1 @@
-base64cpp 1.1.6
+base64cpp 1.1.8

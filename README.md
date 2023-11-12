@@ -19,6 +19,21 @@
     cmake -DBUILD_TESTING=ON ..; make -j4
     make test
 
+Windows pkg-config
+=======
+    I assume here that MinGW was installed to C:\MinGW. 
+    There were multiple versions of the packages available, 
+    and in each case I just downloaded the latest version.
+    
+    go to http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/
+    download the file pkg-config_0.26-1_win32.zip
+    extract the file bin/pkg-config.exe to C:\MinGW\bin
+    download the file gettext-runtime_0.18.1.1-2_win32.zip
+    extract the file bin/intl.dll to C:\MinGW\bin
+    go to http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.28
+    download the file glib_2.28.8-1_win32.zip
+    extract the file bin/libglib-2.0-0.dll to C:\MinGW\bin
+
 Windows GCC
 =======
 

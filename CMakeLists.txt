@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 # Project
 #
 set(PROJECT_LIB base64cpp)
-project(${PROJECT_LIB} VERSION 1.1.9)
+project(${PROJECT_LIB} VERSION 1.1.8)
 
 set (VERSION_FILE "version.txt")
 file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
@@ -116,11 +116,8 @@ if (BUILD_TESTING)
                 -DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}
                 PREFIX ${DEHANCER_COMMON_DIR}
                 )
-
         set(COMMON_DEPENDENCIES ${COMMON_DEPENDENCIES};googletest)
-        link_directories(
-                ${EXTERNAL_INSTALL_LOCATION}/lib
-                ${EXTERNAL_INSTALL_LOCATION}/lib64)
+        link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${EXTERNAL_INSTALL_LOCATION}/lib64)
     endif ()
 
 endif ()

@@ -3,7 +3,6 @@
 //
 
 #include "base64cpp.hpp"
-
 #include <iostream>
 #include <cstdint>
 

@@ -96,7 +96,7 @@ include(ExternalProject)
 #
 if (BUILD_TESTING)
     find_package(GTest)
-    if (NOT GTEST_FOUND)
+    if (NOT GTest_FOUND)
 
         string(STRIP "${CMAKE_C_FLAGS} -D_ITERATOR_DEBUG_LEVEL=0" C_FLAGS)
         string(STRIP "${CMAKE_CXX_FLAGS} -D_ITERATOR_DEBUG_LEVEL=0" CXX_FLAGS)
@@ -117,6 +117,7 @@ if (BUILD_TESTING)
                 PREFIX ${DEHANCER_COMMON_DIR}
                 )
         set(COMMON_DEPENDENCIES ${COMMON_DEPENDENCIES};googletest)
+        link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${EXTERNAL_INSTALL_LOCATION}/lib64)
     endif ()
 
 endif ()

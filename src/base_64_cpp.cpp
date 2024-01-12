@@ -5,6 +5,7 @@
 #include "base64cpp.hpp"
 
 #include <iostream>
+#include <cstdint>
 
 namespace base64 {
 
@@ -93,7 +94,6 @@ namespace base64 {
 
       unsigned char in[4], out[3], v;
       int i, len;
-      int osize=0;
       int j=0;
 
       auto* indata = reinterpret_cast<const unsigned char*>(input.data());

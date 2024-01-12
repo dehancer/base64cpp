@@ -5,6 +5,7 @@
 #include "base64cpp.hpp"
 
 #include <iostream>
+#include <cstdint>
 
 namespace base64 {
 

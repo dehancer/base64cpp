@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 #include "base64cpp.hpp"
 
-TEST(Base64, Base64Test) {
+GTEST_TEST(Base64, Base64Test) {
 
     std::string str = "1234567890-=asdfghjkl;'zxcvbnm,./1234567890-=asdfghjkl;'zxcvbnm,./1234567890-=asdfghjkl;'zxcvbnm,./1234567890-=asdfghjkl;'zxcvbnm,./1234567890-=asdfghjkl;'zxcvbnm,./1234567890-=asdfghjkl;'zxcvbnm,./";
     std::string base64;

@@ -17,10 +17,6 @@ include_directories(
         ${EXTERNAL_INSTALL_LOCATION}/include
 )
 
-link_directories(
-        ${EXTERNAL_INSTALL_LOCATION}/lib
-)
-
 file(GLOB TESTS_SOURCES ${TESTS_SOURCES}
         ./*.cpp
         )
@@ -40,6 +36,6 @@ add_dependencies(
 )
 
 
-add_test(test ${TEST})
+add_test(test ${TEST} COMMAND ${TEST})
 enable_testing()
 

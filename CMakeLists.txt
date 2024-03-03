@@ -113,7 +113,6 @@ if (BUILD_TESTING)
         )
 
         FetchContent_MakeAvailable(googletest)
-        link_directories(${EXTERNAL_INSTALL_LOCATION}/lib ${EXTERNAL_INSTALL_LOCATION}/lib64)
     endif ()
 
 endif ()

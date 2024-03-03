@@ -13,7 +13,7 @@ file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")
 # Options
 #
 option(BUILD_TESTING "Enable creation of Eigen tests." OFF)
-option(DEHANCER_TARGET_ARCH "")
+option(DEHANCER_TARGET_ARCH "" "")
 
 option(DEHANCER_COMMON_DIR  "")
 if (NOT DEHANCER_COMMON_DIR)
@@ -23,16 +23,6 @@ endif ()
 option(EXTERNAL_INSTALL_LOCATION  "")
 if (NOT EXTERNAL_INSTALL_LOCATION)
     set (EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
-endif ()
-
-if (DEHANCER_TARGET_ARCH)
-    #
-    # x86_64-apple-macos10.13
-    # or
-    # arm64-apple-macos11
-    #
-#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -target ${DEHANCER_TARGET_ARCH}")
-#    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -target ${DEHANCER_TARGET_ARCH}")
 endif ()
 
 if (WIN32)
@@ -86,16 +76,14 @@ if(CCACHE_FOUND)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK ccache)
 endif(CCACHE_FOUND)
 
-#
-# Includes
-#
-include(ExternalProject)
 
 #
 # Google Test
 #
 if (BUILD_TESTING)
+
     find_package(GTest)
+
     if (NOT GTest_FOUND)
 
         string(STRIP "${CMAKE_C_FLAGS} -D_ITERATOR_DEBUG_LEVEL=0" C_FLAGS)

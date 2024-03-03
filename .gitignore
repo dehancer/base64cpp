@@ -1,4 +1,3 @@
-!.idea
 .idea/*
 !.idea/cmake.xml
 
@@ -50,8 +49,6 @@ CTestTestfile.cmake
 build
 build-*
 cmake-build-*
-.idea
-.idea/*
 Index
 Build
 Pods

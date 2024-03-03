@@ -7,6 +7,10 @@
  1. cmake
  1. gcc/clang
  
+## Install googletest on macOS
+    cmake -G Xcode .. -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_INSTALL_PREFIX=~/Develop/local/universal
+    cmake --build . && cmake --build . --target=install
+
  ## Build
  
     git clone https://github.com/dnevera/base64cpp

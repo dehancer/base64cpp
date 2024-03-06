@@ -20,11 +20,6 @@ if (NOT DEHANCER_COMMON_DIR)
     set(DEHANCER_COMMON_DIR ${CMAKE_BINARY_DIR}/tmp)
 endif ()
 
-option(EXTERNAL_INSTALL_LOCATION  "")
-if (NOT EXTERNAL_INSTALL_LOCATION)
-    set (EXTERNAL_INSTALL_LOCATION ${CMAKE_BINARY_DIR}/external)
-endif ()
-
 if (WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -EHsc -Wno-deprecated-declarations")
     add_definitions(/MT /DWIN32=1 /D_ITERATOR_DEBUG_LEVEL=0)
@@ -50,7 +45,6 @@ set (BUILD_SHARED_LIBS OFF)
 
 # googletes, etc
 set (EXTERNAL_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/external)
-set (EXTERNAL_INCLUDE_DIR ${EXTERNAL_INSTALL_LOCATION}/include)
 
 #
 # Packages

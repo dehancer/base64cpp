@@ -14,7 +14,6 @@ endif ()
 include_directories(
         ./
         ../include
-        ${EXTERNAL_INSTALL_LOCATION}/include
 )
 
 file(GLOB TESTS_SOURCES ${TESTS_SOURCES}

@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.22)
 
 #
 # Project
 #
 set(PROJECT_LIB base64cpp)
-project(${PROJECT_LIB} VERSION 1.1.9)
+project(${PROJECT_LIB} VERSION 1.2.0)
 
 set (VERSION_FILE "version.txt")
 file (WRITE "${VERSION_FILE}" "${PROJECT_NAME} ${PROJECT_VERSION}")

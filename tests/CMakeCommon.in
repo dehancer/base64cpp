@@ -4,14 +4,7 @@ if (GTEST_FOUND)
     include_directories(${GTEST_INCLUDE_DIRS})
     set(TEST_LIBRARIES ${GTEST_BOTH_LIBRARIES})
 else()
-    string(TOLOWER  ${CMAKE_BUILD_TYPE} BUILD_TYPE)
-    if (${BUILD_TYPE} STREQUAL "debug")
-        message("Googletest ${TEST} DEBUG MODE: ${CMAKE_BUILD_TYPE}")
-        set(TEST_LIBRARIES gtestd;gtest_maind)
-    else()
-        message("Googletest ${TEST} RELEASE MODE: ${CMAKE_BUILD_TYPE}")
-        set(TEST_LIBRARIES gtest;gtest_main)
-    endif()
+    set(TEST_LIBRARIES gtest_main)
 endif()
 
 if (NOT WIN32)
@@ -21,11 +14,6 @@ endif ()
 include_directories(
         ./
         ../include
-        ${EXTERNAL_INSTALL_LOCATION}/include
-)
-
-link_directories(
-        ${EXTERNAL_INSTALL_LOCATION}/lib
 )
 
 file(GLOB TESTS_SOURCES ${TESTS_SOURCES}
@@ -42,12 +30,11 @@ target_link_libraries(
 
 add_dependencies(
         ${TEST}
-
         ${PROJECT_LIB}
         ${COMMON_DEPENDENCIES}
 )
 
 
-add_test(test ${TEST})
+add_test(test ${TEST} COMMAND ${TEST})
 enable_testing()
 

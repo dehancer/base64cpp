@@ -1,7 +1,5 @@
 include(CMakePackageConfigHelpers)
 
-set(CMAKE_INSTALL_PREFIX /usr/local/${PROJECT_LIB})
-
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include
         ../include
@@ -10,7 +8,7 @@ include_directories(
 )
 
 FILE(GLOB PUBLIC_INCLUDE_FILES
-        ${CMAKE_SOURCE_DIR}/include/*.hpp
+        ../include/*.hpp
         )
 
 FILE(GLOB INCLUDE_FILES

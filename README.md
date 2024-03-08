@@ -15,9 +15,11 @@
  
     git clone https://github.com/dnevera/base64cpp
     cd ./base64cpp; mkdir build; cd ./build
-    # mac os M1 
+
+    # mac os M1  universal bin
     cmake -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 ..
-    cmake --build . && cmake --build . --target=install 
+    cmake --build . && cmake --build . --target=install
+
     # or mac os Intel
     cmake -DCMAKE_OSX_ARCHITECTURES=x86_64 ..
     cmake --build . && cmake --build . --target=install 

@@ -1,59 +1,26 @@
-include(CMakePackageConfigHelpers)
+add_library(base64cpp ../src/base_64_cpp.cpp)
+add_library(base64cpp::base64cpp ALIAS base64cpp)
 
-include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ../include
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/
-        ${EXTERNAL_LOCATION}
+target_compile_features(base64cpp PUBLIC cxx_std_11)
+
+target_sources(base64cpp PUBLIC
+    FILE_SET HEADERS
+    BASE_DIRS ../include
+    FILES ../include/base64cpp.hpp
 )
 
-FILE(GLOB PUBLIC_INCLUDE_FILES
-        ../include/*.hpp
-        )
-
-FILE(GLOB INCLUDE_FILES
-        ${PUBLIC_INCLUDE_FILES}
-        )
-
-FILE(GLOB SOURCES
-        ../src/*.cpp
-        )
-
-add_library(
-        ${PROJECT_LIB}
-        ${SOURCES})
-
-target_link_libraries (
-        ${PROJECT_LIB}  PUBLIC
-        ${Boost_LIBRARIES}
+set_target_properties(base64cpp PROPERTIES
+    CXX_EXTENSIONS OFF
+    POSITION_INDEPENDENT_CODE ON
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+    VERSION "${PROJECT_VERSION}"
+    SOVERSION "${PROJECT_VERSION_MAJOR}"
 )
 
-target_include_directories(
-        ${PROJECT_LIB}
-        PUBLIC
-        ../include
+install(TARGETS base64cpp
+    EXPORT base64cppTargets
+    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
+    FILE_SET HEADERS DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
-
-set(config_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
-set(generated_dir "${CMAKE_CURRENT_BINARY_DIR}/generated")
-
-# Configuration
-set(version_config "${generated_dir}/${PROJECT_NAME}ConfigVersion.cmake")
-set(project_config "${generated_dir}/${PROJECT_NAME}Config.cmake")
-set(TARGETS_EXPORT_NAME "${PROJECT_NAME}")
-set(namespace "${PROJECT_NAME}::")
-
-write_basic_package_version_file(
-        "${version_config}" COMPATIBILITY SameMajorVersion
-)
-
-configure_package_config_file(
-        "cmake/Config.cmake.in"
-        "${project_config}"
-        INSTALL_DESTINATION "${config_install_dir}"
-)
-
-install(TARGETS ${PROJECT_LIB}   DESTINATION lib)
-install(FILES   ${PUBLIC_INCLUDE_FILES} DESTINATION include)
-install(FILES   ${project_config} ${version_config} DESTINATION lib/cmake/${PROJECT_LIB})
-install(FILES cmake/${PROJECT_LIB}.cmake DESTINATION lib/cmake/${PROJECT_LIB})

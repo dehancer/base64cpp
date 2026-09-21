@@ -1,134 +1,64 @@
 # Base64cpp
 
- Base64 with encoding new line C++11 binary to ascii string encoder and decoder library.
- 
- ## Requirements
- 1. c++11
- 1. cmake
- 1. gcc/clang
- 
-## Install googletest on macOS
-    cmake -G Xcode .. -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64" -DCMAKE_INSTALL_PREFIX=~/Develop/local/universal
-    cmake --build . && cmake --build . --target=install
+## Build and install
 
- ## Build
- 
-    git clone https://github.com/dnevera/base64cpp
-    cd ./base64cpp; mkdir build; cd ./build
+```sh
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$HOME/local-dehancer"
+cmake --build build --config Release --parallel $(nproc)
+cmake --install build --config Release
+```
 
-    # mac os M1  universal bin
-    cmake -DCMAKE_OSX_ARCHITECTURES=arm64;x86_64 ..
-    cmake --build . && cmake --build . --target=install
+Use `-DBUILD_SHARED_LIBS=ON` for a shared library; the default is static.
 
-    # or mac os Intel
-    cmake -DCMAKE_OSX_ARCHITECTURES=x86_64 ..
-    cmake --build . && cmake --build . --target=install 
+`GNUInstallDirs` selects subdirectories beneath `CMAKE_INSTALL_PREFIX`: typically
+`lib` (or `lib64`) for libraries, `include` for headers, and `bin` for runtime files.
+Set `-DCMAKE_INSTALL_LIBDIR=lib` to explicitly select `<prefix>/lib`.
+Keep directory overrides relative to preserve prefix overrides and relocation;
+absolute directory overrides deliberately bypass the prefix.
 
-Windows pkg-config
-=======
-    I assume here that MinGW was installed to C:\MinGW. 
-    There were multiple versions of the packages available, 
-    and in each case I just downloaded the latest version.
-    
-    go to http://ftp.gnome.org/pub/gnome/binaries/win32/dependencies/
-    download the file pkg-config_0.26-1_win32.zip
-    extract the file bin/pkg-config.exe to C:\MinGW\bin
-    download the file gettext-runtime_0.18.1.1-2_win32.zip
-    extract the file bin/intl.dll to C:\MinGW\bin
-    go to http://ftp.gnome.org/pub/gnome/binaries/win32/glib/2.28
-    download the file glib_2.28.8-1_win32.zip
-    extract the file bin/libglib-2.0-0.dll to C:\MinGW\bin
+## Use an installed package
 
-Windows GCC
-=======
+```cmake
+find_package(base64cpp CONFIG REQUIRED)
+target_link_libraries(my_app PRIVATE base64cpp::base64cpp)
+```
 
-    cmake -G Xcode \ 
-    -DCMAKE_TOOLCHAIN_FILE=~/Develop/Dehancer/Dehancer-Plugins/ios-cmake/ios.toolchain.cmake \
-    -DPLATFORM=OS64COMBINED \
-    -DENABLE_BITCODE=ON \
-    -DBUILD_TESTING=OFF \
-    -DCMAKE_INSTALL_PREFIX=~/Develop/local/ios/dehancer
-    cmake --build . --config Release && cmake --install . --config Release
+This project is not versioned so no cmake version file is being installed and
+consumers should not request particular version in `find_package()`.
 
+Configure the consumer with `-DCMAKE_PREFIX_PATH="$HOME/local-dehancer"`.
 
-Windows MVSC
-=======
-    # Requrements: 
-    # Visual Studio, English Language Pack!
-    # https://vcpkg.info/
-    # GitBash
+To embed in another project: `FetchContent_MakeAvailable(base64cpp)`.
 
-    cd C:
-    git clone https://github.com/microsoft/vcpkg
-    cd /c/vcpkg/
-    ./bootstrap-vcpkg.sh
-    /c/vcpkg/vcpkg integrate install
-    /c/vcpkg/vcpkg install gtest
+## pkg-config
 
-    # cmake integration
-    -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+Disabled by default. Configure with `-DCREATE_PKG_CONFIG=ON` to generate and
+install `base64cpp.pc`. The CMake package is always generated and installed.
 
- ## Build in project
- 
- ### cmake 
- 
- ```cmake 
- 
- find_package (PkgConfig QUIET)
- 
- # ...
- 
- pkg_check_modules(base64cpplib base64cpp)
- 
- if (base64cpplib_FOUND)
- 
-     include_directories(${base64cpplib_INCLUDE_DIRS})
-     link_directories(${base64cpplib_LIBRARY_DIRS})
-      
- else()
- 
-     ExternalProject_Add(base64cpplib
-             GIT_REPOSITORY https://github.com/dnevera/base64cpp
-             CMAKE_ARGS
-             -DCMAKE_INSTALL_PREFIX=${EXTERNAL_INSTALL_LOCATION}
-             )
- 
-     add_dependencies(base64cpplib)    
-     
- endif()
- 
- # ...
- 
- target_link_libraries(
-         target
-         ...
-         ${base64cpplib_LIBRARIES}
-         ...
- )
+```sh
+export PKG_CONFIG_PATH="$HOME/local-dehancer/lib/pkgconfig"
+pkg-config --cflags --libs base64cpp
+```
 
- 
- ```
- 
- ## Examples
- 
- ```cpp
- #include <base64cpp.hpp>
- 
- //...
- 
-   std::string source  = "1234567890binary";
-   std::string encoded;
-   int line_size = 24; // by default 72
+## Tests
 
-   base64::encode(source, encoded, line_size);
-   
-   std::string decoded;
-   
-   base64::decode(encoded, decoded);
-   
- //...
+Install GoogleTest, then configure with:
 
- ```
+```sh
+cmake -S . -B build -DBUILD_TESTING=ON
+cmake --build build --parallel
+ctest --test-dir build --output-on-failure
+```
 
- 
-  
+## Example
+
+```cpp
+#include <base64cpp.hpp>
+
+std::string source = "1234567890binary";
+std::string encoded;
+base64::encode(source, encoded, 24); // Default line width: 76.
+
+std::string decoded;
+base64::decode(encoded, decoded);
+```

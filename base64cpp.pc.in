@@ -1,13 +1,11 @@
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-libdir=@libdir@
-includedir=@includedir@
+prefix=@base64cpp_pc_prefix@
+exec_prefix=${prefix}
+libdir=@base64cpp_pc_LIBDIR@
+includedir=@base64cpp_pc_INCLUDEDIR@
 
 Name: base64cpp
-Description: Base64 CPP Lib
+Description: Dehancer base64 C++ encoder and decoder
 Version: @PROJECT_VERSION@
-URL: https://github.com/dnevera/base64cpp
-Requires.private: @requires_private@
+URL: https://github.com/dehancer/base64cpp
 Libs: -L${libdir} -lbase64cpp
-Libs.private: @libs_private@
-CFlags: -I${includedir}
+Cflags: -I${includedir}

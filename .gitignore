@@ -58,6 +58,7 @@ Podfile.lock
 .vscode
 # Build
 build
+ci-build
 *-build-*
 *.user
 .DS_Store

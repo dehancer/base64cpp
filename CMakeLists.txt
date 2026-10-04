@@ -8,6 +8,8 @@ include(CMakePackageConfigHelpers)
 option(BUILD_TESTING "Build tests" OFF)
 option(CREATE_PKG_CONFIG "Generate and install pkg-config metadata" OFF)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 add_subdirectory(lib)
 
 set(base64cpp_cmake_install_dir "${CMAKE_INSTALL_LIBDIR}/cmake/base64cpp")

@@ -1,43 +1,32 @@
-# Base64cpp
+# base64cpp
 
 ## Build and install
 
 ```sh
-cmake -S . -B build \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX="$HOME/local-dehancer" \
-  -DCMAKE_C_COMPILER_LAUNCHER=ccache \
-  -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-cmake --build build --config Release --parallel $(nproc)
-cmake --install build --config Release
+cmake -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build --parallel $(nproc)
+cmake --install build --parallel $(nproc)
 ```
+
+Make sure to set proper `CMAKE_PREFIX_PATH` and `CMAKE_INSTALL_PREFIX` to discover dependencies and install.
 
 Use `-DBUILD_SHARED_LIBS=ON` for a shared library; the default is static.
 
-`GNUInstallDirs` selects subdirectories beneath `CMAKE_INSTALL_PREFIX`: typically
-`lib` (or `lib64`) for libraries, `include` for headers, and `bin` for runtime files.
-Set `-DCMAKE_INSTALL_LIBDIR=lib` to explicitly select `<prefix>/lib`.
-Keep directory overrides relative to preserve prefix overrides and relocation;
-absolute directory overrides deliberately bypass the prefix.
+`CMAKE_POSITION_INDEPENDENT_CODE` is set to `ON`.
 
-## Use an installed package
+## Usage in CMake
 
 ```cmake
 find_package(base64cpp CONFIG REQUIRED)
 target_link_libraries(my_app PRIVATE base64cpp::base64cpp)
 ```
 
-This project is not versioned so no cmake version file is being installed and
-consumers should not request particular version in `find_package()`.
+The CMake package is always generated and installed.
 
-Configure the consumer with `-DCMAKE_PREFIX_PATH="$HOME/local-dehancer"`.
-
-To embed in another project: `FetchContent_MakeAvailable(base64cpp)`.
-
-## pkg-config
+## Usage with pkg-config
 
 Disabled by default. Configure with `-DCREATE_PKG_CONFIG=ON` to generate and
-install `base64cpp.pc`. The CMake package is always generated and installed.
+install `base64cpp.pc`.
 
 ```sh
 export PKG_CONFIG_PATH="$HOME/local-dehancer/lib/pkgconfig"
@@ -46,11 +35,11 @@ pkg-config --cflags --libs base64cpp
 
 ## Tests
 
-Install GoogleTest, then configure with:
+Install GoogleTest, then:
 
 ```sh
-cmake -S . -B build -DBUILD_TESTING=ON
-cmake --build build --parallel
+cmake -B build -DBUILD_TESTING=ON
+cmake --build build --parallel $(nproc)
 ctest --test-dir build --output-on-failure
 ```
 
